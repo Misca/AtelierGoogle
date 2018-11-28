@@ -13,7 +13,6 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -30,7 +29,7 @@ public class ApiClient {
     public static Retrofit getClient(Context context) {
 
         if (okHttpClient == null)
-            initOkHttp(context);
+            getOkHttpClient(context);
 
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
@@ -43,13 +42,12 @@ public class ApiClient {
         return retrofit;
     }
 
-    private static void initOkHttp(final Context context) {
+    private static void getOkHttpClient(final Context context) {
         OkHttpClient.Builder httpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
-                .writeTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS);
-
-        httpClient.addInterceptor(getAuthInterceptor(context));
+                .writeTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
+                .addInterceptor(getAuthInterceptor(context));
 
         okHttpClient = httpClient.build();
     }
