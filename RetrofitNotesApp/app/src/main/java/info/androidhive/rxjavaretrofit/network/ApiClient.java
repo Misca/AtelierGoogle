@@ -1,6 +1,7 @@
 package info.androidhive.rxjavaretrofit.network;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.io.IOException;
@@ -48,12 +49,14 @@ public class ApiClient {
                 .readTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS);
 
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        httpClient.addInterceptor(getAuthInterceptor(context));
 
-        httpClient.addInterceptor(interceptor);
+        okHttpClient = httpClient.build();
+    }
 
-        httpClient.addInterceptor(new Interceptor() {
+    @NonNull
+    private static Interceptor getAuthInterceptor(final Context context) {
+        return new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
@@ -70,8 +73,6 @@ public class ApiClient {
                 Request request = requestBuilder.build();
                 return chain.proceed(request);
             }
-        });
-
-        okHttpClient = httpClient.build();
+        };
     }
 }
