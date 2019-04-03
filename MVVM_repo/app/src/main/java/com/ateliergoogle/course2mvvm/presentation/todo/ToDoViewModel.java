@@ -9,6 +9,7 @@ import android.databinding.ObservableList;
 import android.util.Log;
 
 import com.ateliergoogle.course2mvvm.data.ToDoRepository;
+import com.ateliergoogle.course2mvvm.generated.callback.OnClickListener;
 import com.ateliergoogle.course2mvvm.presentation.todo.adaper.ToDoItemViewModel;
 
 public class ToDoViewModel extends ViewModel implements LifecycleObserver {
@@ -32,7 +33,6 @@ public class ToDoViewModel extends ViewModel implements LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     public void fetchToDoList() {
-        Log.d(TAG, "fetchToDoList()");
         repository.getToDos();
     }
 

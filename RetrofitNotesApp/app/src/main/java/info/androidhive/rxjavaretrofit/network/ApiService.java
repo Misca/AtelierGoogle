@@ -19,6 +19,7 @@ import retrofit2.http.Path;
  */
 
 public interface ApiService {
+    //TODO 4 check the REST Api
     // Register new user
     @FormUrlEncoded
     @POST("notes/user/register")

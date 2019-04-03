@@ -53,9 +53,9 @@ import retrofit2.HttpException;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private ApiService apiService;
-    private CompositeDisposable disposable = new CompositeDisposable();
+    private final CompositeDisposable disposable = new CompositeDisposable();
     private NotesAdapter mAdapter;
-    private List<Note> notesList = new ArrayList<>();
+    private final List<Note> notesList = new ArrayList<>();
 
     @BindView(R.id.coordinator_layout)
     CoordinatorLayout coordinatorLayout;
@@ -307,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void showNoteDialog(final boolean shouldUpdate, final Note note, final int position) {
         LayoutInflater layoutInflaterAndroid = LayoutInflater.from(getApplicationContext());
-        View view = layoutInflaterAndroid.inflate(R.layout.note_dialog, null);
+        View view = layoutInflaterAndroid.inflate(R.layout.note_dialog, null, false);
 
         AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(MainActivity.this);
         alertDialogBuilderUserInput.setView(view);

@@ -1,18 +1,21 @@
 package info.androidhive.rxjavaretrofit.network;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import info.androidhive.rxjavaretrofit.BuildConfig;
 import info.androidhive.rxjavaretrofit.app.Const;
 import info.androidhive.rxjavaretrofit.utils.PrefUtils;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -43,13 +46,23 @@ public class ApiClient {
     }
 
     private static void getOkHttpClient(final Context context) {
+
         OkHttpClient.Builder httpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
-                .addInterceptor(getAuthInterceptor(context));
+                .addInterceptor(getAuthInterceptor(context))
+                .addInterceptor(getHttpLoggingInterceptor());
 
         okHttpClient = httpClient.build();
+    }
+
+    private static HttpLoggingInterceptor getHttpLoggingInterceptor() {
+        //TODO 1 return a new logging interceptor
+
+        //TODO 2 run the app and check the logs
+
+        return null;
     }
 
     @NonNull
